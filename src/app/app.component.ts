@@ -7,14 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'todo';
-  newTask: string;
+
   taskList: Array<string> = [];
   taskDone: Array<string> = [];
 
-  add() {
-    this.taskList.push(this.newTask);
-    this.newTask = "";
-    console.log(this.taskList);
+  add(task: string) {
+    this.taskList.push(task);
+
+
 
   }
 
@@ -25,7 +25,7 @@ export class AppComponent {
   done(task: string) {
     this.taskDone.push(task);
     this.remove(task);
-    console.log(this.taskList)
+
   }
 
 
