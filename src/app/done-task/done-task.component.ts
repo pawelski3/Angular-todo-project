@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class DoneTaskComponent implements OnInit {
 
-@Input()
-taskDone:Array<string>=[];
+  @Input()
+  taskDone: Array<string> = [];
 
 
   constructor() { }
