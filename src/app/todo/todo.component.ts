@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { EventEmitter } from 'events';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+
 
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css']
+  styleUrls: ['./todo.component.css'],
+
 })
 export class TodoComponent implements OnInit {
 
@@ -29,5 +30,8 @@ export class TodoComponent implements OnInit {
     this.emitDone.emit(task);
   }
 
+  getColor():string{
+    return this.tasksList.length>=5?'red':'green';
+  }
 
 }
