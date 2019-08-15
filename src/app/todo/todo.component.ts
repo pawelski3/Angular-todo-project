@@ -31,6 +31,7 @@ export class TodoComponent implements OnInit {
     this.tasksService.remove(task);
   }
   done(task: Task) {
+    task.end = new Date();
     this.tasksService.done(task);
 
   }
