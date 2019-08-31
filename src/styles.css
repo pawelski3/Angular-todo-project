@@ -3,3 +3,9 @@ body{
 
   background-color:lightblue;
 }
+
+.container{
+  display:grid;
+  justify-content: center;
+  padding: 20px;
+}

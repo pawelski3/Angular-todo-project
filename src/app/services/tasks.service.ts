@@ -1,46 +1,56 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Task } from '../models/task';
+import { HttpService } from './http.service';
 
 
 @Injectable()
 export class TaskService {
   title = 'todo';
 
-  private taskList: Array<Task> = [];
-  private taskDone: Array<Task> = [];
+  //private taskList: Array<Task> = [];
+  //private taskDone: Array<Task> = [];
 
   private tasksListObs = new BehaviorSubject<Array<Task>>([]);
-  private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
+  //private tasksDoneObs = new BehaviorSubject<Array<Task>>([]);
 
 
-  constructor() {
-    this.taskList = [
-      { name: 'sprzątanie kuwety', created: new Date() },
-      { name: 'nauka angulara', created: new Date() },
-      { name: 'Podlewanie kwiatów', created: new Date() },
-      { name: 'zakupy', created: new Date() }];
-    this.tasksListObs.next(this.taskList);
+  constructor(private httpService: HttpService) {
+    const taskList = [
+      { name: 'sprzątanie kuwety', created: new Date().toLocaleString(), isDone: false },
+      { name: 'nauka angulara', created: new Date().toLocaleString(), isDone: false },
+      { name: 'Podlewanie kwiatów', created: new Date().toLocaleString(), isDone: false },
+      { name: 'zakupy', created: new Date().toLocaleString(), isDone: false },
+      { name: 'zakupy2', created: new Date().toLocaleString(), end: new Date().toLocaleString(), isDone: true },
+    ];
+
+
+    this.tasksListObs.next(taskList);
+
+
+
   }
 
 
-  add(task: Task) {
-    this.taskList.push(task);
-    this.tasksListObs.next(this.taskList);
+  add(task: Array<Task>) {
+    const list = this.tasksListObs.getValue().concat(task);
 
-
-
+    this.tasksListObs.next(list);
   }
 
   remove(task: Task) {
-    this.taskList = this.taskList.filter(e => e !== task);
-    this.tasksListObs.next(this.taskList);
+    const list = this.tasksListObs.getValue().filter(e => e !== task);
+    this.tasksListObs.next(list);
   }
 
   done(task: Task) {
-    this.taskDone.push(task);
-    this.remove(task);
-    this.tasksDoneObs.next(this.taskDone);
+    task.end = new Date().toLocaleDateString();
+    task.isDone = true;
+    const list = this.tasksListObs.getValue();
+    this.tasksListObs.next(list);
+    // this.taskDone.push(task);
+    // this.remove(task);
+    // this.tasksDoneObs.next(this.taskDone);
 
   }
 
@@ -48,8 +58,6 @@ export class TaskService {
     return this.tasksListObs.asObservable();
   }
 
-  getTasksDoneObs(): Observable<Array<Task>> {
-    return this.tasksDoneObs.asObservable();
-  }
+
 
 }
